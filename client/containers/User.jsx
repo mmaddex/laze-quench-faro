@@ -5,15 +5,17 @@ import connectContainer from 'redux-static';
 
 export default connectContainer(class extends Component {
   static stateToProps = (state) => ({
-    user: (state.auth.get('user') && state.auth.get('user').toJS()) || {}
+    user: (state.auth.get('user') && state.auth.get('user').toJS()) || {},
+    depnotes: (state.depnotes.get('data') && state.depnotes.get('data').toJS()) || {}
   });
 
   static propTypes = {
-    user: PropTypes.object
+    user: PropTypes.object,
+    depnotes: PropTypes.object
   }
 
   render() {
-    const { user } = this.props;
+    const { user, depnotes } = this.props;
 
     return (
       <div className="configuration">
@@ -25,6 +27,11 @@ export default connectContainer(class extends Component {
         <div className="row">
           <div className="col-xs-12">
             <Json jsonObject={user} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-xs-12">
+            <Json jsonObject={depnotes} />
           </div>
         </div>
       </div>

@@ -16,3 +16,5 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 // Logout.
 export const LOGOUT_PENDING = 'LOGOUT_PENDING';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+
+export const FETCH_DEPNOTES = 'FETCH_DEPNOTES';

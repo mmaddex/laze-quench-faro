@@ -43,6 +43,39 @@ export default (storage) => {
       .catch(err => next(err));
   });
 
+  api.get('/depnotes', managementApiClient, (req, res, next) => {
+    // needs to grab all the pages
+    req.auth0.logs.getAll(
+      {
+        q: 'type: depnote',
+        include_totals: true,
+        per_page: 100
+      }).then((result) => {
+        var depnotes = result.logs
+        var total = result.total
+        console.log(depnotes);
+        console.log(total);
+        // needs to consolidate the logs into something like
+        /*
+         * [{
+         *   "description": "description of the log",
+         *   "details": {
+         *     clients:
+         *   }
+         *   "clients": [...], // can be null
+         *   "apis": [...], // can be null
+         *   
+         * },
+         * ...
+         * ]
+         *   
+         * }
+         */
+        res.json(depnotes);
+      }).catch(err => next(err));
+
+  });
+
   api.get('/settings', (req, res, next) => {
     storage.read()
       .then(result => res.json(result))

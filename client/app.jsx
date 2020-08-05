@@ -10,6 +10,7 @@ import { createHistory } from 'history';
 import { routerMiddleware, syncHistoryWithStore } from 'react-router-redux';
 
 import { loadCredentials } from './actions/auth';
+import { loadDepNotes } from './actions/depnotes';
 import routes from './routes';
 import configureStore from './store/configureStore';
 import showDevTools from './showDevTools';
@@ -26,6 +27,7 @@ const store = configureStore([ routerMiddleware(history) ], { });
 const reduxHistory = syncHistoryWithStore(history, store);
 
 store.dispatch(loadCredentials());
+store.dispatch(loadDepNotes());
 
 // Render application.
 ReactDOM.render(
