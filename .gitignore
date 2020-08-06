@@ -1,6 +1,7 @@
 .DS_Store
 .idea
 assets/app/*
+build/bundle.js
 server/config.json
 server/data.json
 node_modules
