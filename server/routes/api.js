@@ -53,8 +53,6 @@ export default (storage) => {
       }).then((result) => {
         var depnotes = result.logs
         var total = result.total
-        console.log(depnotes);
-        console.log(total);
         // needs to consolidate the logs into something like
         /*
          * [{
@@ -74,7 +72,10 @@ export default (storage) => {
         var transformit = depnotes.reduce(
           // reduces array of depnotes to a an object to collect all the related notes
           (acc, depnote) => {
-            (acc[depnote['description']] = acc[depnote['description']] || []).push(depnote.date)
+            //(acc[depnote['description']] = acc[depnote['description']] || []).push(depnote.date)
+            var id = depnote['description'];
+            (acc[id] = acc[id] || {});
+            (acc[id]['dates'] = acc[id]['dates'] || []).push(depnote.date);
             return acc
           },
           {})
