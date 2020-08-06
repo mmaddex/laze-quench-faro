@@ -21,12 +21,7 @@ export default connectContainer(class extends Component {
       <div className="configuration">
         <div className="row content-header">
           <div className="col-xs-12 user-table-content">
-            <h2>Hello</h2>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-xs-12">
-            <Json jsonObject={user} />
+            <h2>Deprecations</h2>
           </div>
         </div>
         <div className="row">

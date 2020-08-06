@@ -45,22 +45,37 @@ export default (storage) => {
   });
 
   api.get('/depnotes', managementApiClient, (req, res, next) => {
-    var depNoteShaper = (depnote) => (
+    const maxDate = (dates) => new Date(Math.max.apply(null, dates.map(d => new Date(d))))
+    const depNoteShaper = (depnote) => (
       {
         [depnote.description]: {
           dates: [
             depnote.date
           ],
-          clients: {
-            [depnote.client_id]: {
-              paths: [
-                depnote.details.request.path
-              ]
+          details: {
+            clients: {
+              [depnote.client_id]: {
+                paths: [
+                  depnote.details.request.path
+                ]
+              }
             }
           }
         }
       }
     )
+    // these should eventually be sourced from a migrations api
+    // maybe a nice stopgap would be an endpoint to provide this data so the extension doesn't need updating to add new projects
+    const metadata = {
+      "Management API Unpaginated Requests: This feature is being deprecated. Please see https://auth0.com/docs/migrations/guides/unpaginated-requests for more information.": {
+        migration_window: "21 July 2020 - 21 Janurary 2021",
+        migration_guide: "https://auth0.com/docs/migrations/guides/unpaginated-requests"
+      },
+      "ID token was used in making a management API call.  This behavior is deprecated. (https://auth0.com/docs/migrations/guides/calling-api-with-idtokens)": {
+        migration_window: "Q4 2020 - Q4 2021",
+        migration_guide: "https://auth0.com/docs/migrations/guides/calling-api-with-idtokens"
+      }
+    }
     // TODO needs to grab all the pages
     req.auth0.logs.getAll(
       {
@@ -69,13 +84,21 @@ export default (storage) => {
         per_page: 100
       }).then((result) => {
         var total = result.total
-        res.json(
-          result.logs.reduce(
-            // reduces array of logs to a an object to collect all the related notes
-            (acc, depnote) => merge(depNoteShaper(depnote), acc),
-            {}
-          )//.map(...) // should then just be able to map that to well formed json
-        )
+        var breakingChanges = result.logs.reduce(
+          // reduces array of logs to a an object to collect all the related notes
+          (acc, depnote) => merge(depNoteShaper(depnote), acc),
+          {}
+        )//.map(...) // should then just be able to map that to well formed json
+        var breakingArray = Object.keys(breakingChanges).map((k) => {
+          return {
+            description: k,
+            last_request: maxDate(breakingChanges[k].dates),
+            migration_window: metadata[k].migration_window,
+            migration_guide: metadata[k].migration_guide,
+            details: breakingChanges[k].details
+          }
+        })
+        res.json(breakingArray)
       }).catch(err => next(err));
 
   });

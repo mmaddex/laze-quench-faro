@@ -37,7 +37,7 @@ export default class Header extends Component {
         <nav title="header" role="navigation" className="navbar navbar-default">
           <div className="container">
             <div id="header" className="navbar-header" style={{ width: '800px' }}>
-              <span className="navbar-brand">Auth0 Example Extension</span>
+              <span className="navbar-brand">Breaking Changes Dashboard</span>
             </div>
             <div id="navbar-collapse" className="collapse navbar-collapse">
               <ul className="nav navbar-nav navbar-right">
