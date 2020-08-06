@@ -26,7 +26,7 @@ export default function (cfg, storageProvider) {
   // dashboardAdmins route allows login with dashboard admin credentials
   app.use(routes.dashboardAdmins({
     secret: config('EXTENSION_SECRET'),
-    audience: 'urn:breaking-changes,
+    audience: 'urn:breaking-changes',
     rta: config('AUTH0_RTA').replace('https://', ''),
     domain: config('AUTH0_DOMAIN'),
     baseUrl: config('PUBLIC_WT_URL'),
