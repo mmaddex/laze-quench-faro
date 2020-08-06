@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { middlewares } from 'auth0-extension-express-tools';
+import merge from 'deepmerge';
 
 import config from '../lib/config';
 
@@ -44,50 +45,37 @@ export default (storage) => {
   });
 
   api.get('/depnotes', managementApiClient, (req, res, next) => {
-    // needs to grab all the pages
+    var depNoteShaper = (depnote) => (
+      {
+        [depnote.description]: {
+          dates: [
+            depnote.date
+          ],
+          clients: {
+            [depnote.client_id]: {
+              paths: [
+                depnote.details.request.path
+              ]
+            }
+          }
+        }
+      }
+    )
+    // TODO needs to grab all the pages
     req.auth0.logs.getAll(
       {
         q: 'type: depnote',
         include_totals: true,
         per_page: 100
       }).then((result) => {
-        var depnotes = result.logs
         var total = result.total
-        // needs to consolidate the logs into something like
-        /*
-         * [{
-         *   "description": "description of the log",
-         *   "details": {
-         *     clients:
-         *   }
-         *   "clients": [...], // can be null
-         *   "apis": [...], // can be null
-         *   
-         * },
-         * ...
-         * ]
-         *   
-         * }
-         */
-        var transformit = depnotes.reduce(
-          // reduces array of depnotes to a an object to collect all the related notes
-          (acc, depnote) => {
-            //(acc[depnote['description']] = acc[depnote['description']] || []).push(depnote.date)
-            var id = depnote['description'];
-            var client_id = depnote['client_id'];
-            (acc[id] = acc[id] || {});
-            (acc[id]['dates'] = acc[id]['dates'] || []).push(depnote.date);
-            (acc[id]['clients'] = acc[id]['clients'] || {});
-            (acc[id]['clients'][client_id] = acc[id]['clients'][client_id] || {});
-            // should be able to de-dup this with a Set somehow
-            (acc[id]['clients'][client_id]['paths'] = acc[id]['clients'][client_id]['paths'] || []).push(depnote.details.request.path);
-
-            return acc
-          },
-          {})
-        // should then just be able to map that to well formed json
-
-        res.json(transformit);
+        res.json(
+          result.logs.reduce(
+            // reduces array of logs to a an object to collect all the related notes
+            (acc, depnote) => merge(depNoteShaper(depnote), acc),
+            {}
+          )//.map(...) // should then just be able to map that to well formed json
+        )
       }).catch(err => next(err));
 
   });
