@@ -74,11 +74,19 @@ export default (storage) => {
           (acc, depnote) => {
             //(acc[depnote['description']] = acc[depnote['description']] || []).push(depnote.date)
             var id = depnote['description'];
+            var client_id = depnote['client_id'];
             (acc[id] = acc[id] || {});
             (acc[id]['dates'] = acc[id]['dates'] || []).push(depnote.date);
+            (acc[id]['clients'] = acc[id]['clients'] || {});
+            (acc[id]['clients'][client_id] = acc[id]['clients'][client_id] || {});
+            // should be able to de-dup this with a Set somehow
+            (acc[id]['clients'][client_id]['paths'] = acc[id]['clients'][client_id]['paths'] || []).push(depnote.details.request.path);
+
             return acc
           },
           {})
+        // should then just be able to map that to well formed json
+
         res.json(transformit);
       }).catch(err => next(err));
 
