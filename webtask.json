@@ -25,17 +25,6 @@
       "description": "Text field with default value",
       "default": "Sarcastic Snails",
       "required": true
-    },
-    "AUTH0_CLIENT_ID": {
-      "description": "Text field with default value",
-      "default": "Sarcastic Snails",
-      "required": true
-    },
-    "AUTH0_CLIENT_SECRET": {
-      "description": "Text field with placeholder",
-      "example": "awsome_name",
-      "type": "password",
-      "required": true
     }
   }
 }
