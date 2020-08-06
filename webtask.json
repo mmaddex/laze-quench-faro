@@ -1,15 +1,15 @@
 {
   "title": "Auth0 Example Extension",
-  "name": "auth0-example-extension",
-  "version": "0.0.0",
+  "name": "auth0-deprecation-dashboard",
+  "version": "0.0.0.0.1",
   "author": "auth0",
   "useHashName": false,
-  "description": "Auth0 example extension with the comments",
+  "description": "HackAuthon20 Deprecation Dashboard",
   "type": "application",
   "category": "end_user",
   "logoUrl": "https://cdn.auth0.com/styleguide/components/1.0.8/media/logos/img/badge.png",
   "initialUrlPath": "/",
-  "repository": "https://github.com/auth0-extensions/auth0-example-extension",
+  "repository": "https://github.com/auth0/hackauth0n-20-depdash/blob/master/webtask.json",
   "keywords": [
     "auth0",
     "extension"
