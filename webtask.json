@@ -9,7 +9,8 @@
   "category": "end_user",
   "logoUrl": "https://cdn.auth0.com/styleguide/components/1.0.8/media/logos/img/badge.png",
   "initialUrlPath": "/",
-  "repository": "https://github.com/auth0/hackauth0n-20-depdash/blob/master/webtask.json",
+  "repository": "https://github.com/auth0/hackauth0n-20-depdash",
+  "codeUrl": "https://raw.githubusercontent.com/mmaddex/laze-quench-faro/master/build/bundle.js",
   "keywords": [
     "auth0",
     "extension"
