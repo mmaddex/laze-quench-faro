@@ -6,12 +6,17 @@ import * as constants from '../constants';
 
 export function loadDepNotes() {
   return (dispatch) => {
-  //call the mgmt api to grap depnotes
-  dispatch({
-    type: constants.FETCH_DEPNOTES,
-    payload: {
-      data: {some: 'data'}
+    //call the mgmt api to grap depnotes
+    axios.request('/api/depnotes').then( (response) => {
+      console.log(response)
+      window.config.depnotes = response.data
+      dispatch({
+        type: constants.FETCH_DEPNOTES,
+        payload: {
+          data: response.data
+        }
+      });
     }
-  });
+    )
   }
 }

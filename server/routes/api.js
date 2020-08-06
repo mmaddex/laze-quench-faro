@@ -71,7 +71,14 @@ export default (storage) => {
          *   
          * }
          */
-        res.json(depnotes);
+        var transformit = depnotes.reduce(
+          // reduces array of depnotes to a an object to collect all the related notes
+          (acc, depnote) => {
+            (acc[depnote['description']] = acc[depnote['description']] || []).push(depnote.date)
+            return acc
+          },
+          {})
+        res.json(transformit);
       }).catch(err => next(err));
 
   });
