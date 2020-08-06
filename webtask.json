@@ -1,10 +1,10 @@
 {
-  "title": "Auth0 Example Extension",
-  "name": "auth0-deprecation-dashboard",
+  "title": "Breaking Changes Dashboard",
+  "name": "auth0-breaking-changes-dashboard",
   "version": "1.0.0",
   "author": "auth0",
   "useHashName": false,
-  "description": "HackAuthon20 Deprecation Dashboard",
+  "description": "HackAuthon20 Breaking Changes Dashboard",
   "type": "application",
   "category": "end_user",
   "logoUrl": "https://cdn.auth0.com/styleguide/components/1.0.8/media/logos/img/badge.png",
