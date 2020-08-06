@@ -68,10 +68,12 @@ export default (storage) => {
     // maybe a nice stopgap would be an endpoint to provide this data so the extension doesn't need updating to add new projects
     const metadata = {
       "Management API Unpaginated Requests: This feature is being deprecated. Please see https://auth0.com/docs/migrations/guides/unpaginated-requests for more information.": {
+        title: "Unpaginated Management API Requests",
         migration_window: "21 July 2020 - 21 Janurary 2021",
         migration_guide: "https://auth0.com/docs/migrations/guides/unpaginated-requests"
       },
       "ID token was used in making a management API call.  This behavior is deprecated. (https://auth0.com/docs/migrations/guides/calling-api-with-idtokens)": {
+        title: "ID Tokens for Management API v2",
         migration_window: "Q4 2020 - Q4 2021",
         migration_guide: "https://auth0.com/docs/migrations/guides/calling-api-with-idtokens"
       }
@@ -88,17 +90,18 @@ export default (storage) => {
           // reduces array of logs to a an object to collect all the related notes
           (acc, depnote) => merge(depNoteShaper(depnote), acc),
           {}
-        )//.map(...) // should then just be able to map that to well formed json
-        var breakingArray = Object.keys(breakingChanges).map((k) => {
-          return {
+        )
+        // creates array of well formed json sumarizing breaking changes
+        res.json(Object.keys(breakingChanges).map((k) => (
+          {
+            title: metadata[k].title,
             description: k,
             last_request: maxDate(breakingChanges[k].dates),
             migration_window: metadata[k].migration_window,
             migration_guide: metadata[k].migration_guide,
             details: breakingChanges[k].details
           }
-        })
-        res.json(breakingArray)
+        )))
       }).catch(err => next(err));
 
   });
