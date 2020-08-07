@@ -36,5 +36,19 @@ export default () => {
         res.sendStatus(204);
       });
   });
+
+  hooks.use("/on-install", hookValidator("/.extensions/on-install"));
+  hooks.post("/on-install", (req, res) => {
+    logger.verbose('Creating SPA client...');
+    req.auth0.createClient({
+          name: 'breaking-changes-spa',
+          app_type: "spa",
+          grant_types: ["authorization_code","implicit","refresh_token"],
+          callbacks: ["https://kazoo-sanguine-hyphen.us12.webtask.io/auth0-breaking-changes-dashboard/login"]
+        }).then((c) => {
+          logger.verbose(`Created Client: ${c.client_id}`);
+          config.setValue("EXTENSION_CLIENT_ID", c.client_id);
+        }).catch((e) => logger.debug(e.message))
+  })
   return hooks;
 };
