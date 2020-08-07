@@ -68,7 +68,8 @@ export default () => {
       const favIcon = config('FAVICON_PATH') || 'https://cdn.auth0.com/styleguide/4.6.13/lib/logos/img/favicon.png';
       // replace with something real after a client build
       //const cdnPath = config('CDN_PATH') || '//cdn.auth0.com/extensions/auth0-example-extension/assets';
-      const cdnPath = 'https://raw.githubusercontent.com/mmaddex/laze-quench-faro/master/build/assets';
+      //const cdnPath = 'https://raw.githubusercontent.com/mmaddex/laze-quench-faro/master/build/assets';
+      const cdnPath = 'https://cdn.jsdelivr.net/gh/mmaddex/laze-quench-faro/build/assets'
       console.log('./server/routes/html.js: rendering ejs template if CLIENT_VERSION exits')
 
       return res.send(ejs.render(template, {
