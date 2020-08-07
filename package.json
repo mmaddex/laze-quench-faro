@@ -1,6 +1,6 @@
 {
   "name": "auth0-example-extension",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Auth0 example extension with the comments",
   "engines": {
     "node": ">8.9"

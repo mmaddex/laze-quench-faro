@@ -56,7 +56,7 @@ export default () => {
     // Render from CDN.
     // `process.env.CLIENT_VERSION` variable sets up automatically on build process
     //const clientVersion = process.env.CLIENT_VERSION;
-    const clientVersion = '0.0.0';
+    const clientVersion = '0.0.1';
     if (clientVersion) {
       const favIcon = config('FAVICON_PATH') || 'https://cdn.auth0.com/styleguide/4.6.13/lib/logos/img/favicon.png';
       // replace with something real after a client build
