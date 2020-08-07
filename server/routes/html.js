@@ -62,7 +62,7 @@ export default () => {
       // replace with something real after a client build
       //const cdnPath = config('CDN_PATH') || '//cdn.auth0.com/extensions/auth0-example-extension/assets';
       //const cdnPath = 'https://raw.githubusercontent.com/mmaddex/laze-quench-faro/master/build/assets';
-      const cdnPath = 'https://cdn.jsdelivr.net/gh/mmaddex/laze-quench-faro/build/assets'
+      const cdnPath = 'https://cdn.jsdelivr.net/gh/mmaddex/laze-quench-faro/dist/client'
       return res.send(ejs.render(template, {
         config: settings,
         assets: {

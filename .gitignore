@@ -6,4 +6,4 @@ server/data.json
 node_modules
 npm-debug.log
 /dist/*
-!/dist/client/*
+!/dist/client
