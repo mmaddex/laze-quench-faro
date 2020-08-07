@@ -48,7 +48,14 @@ export default () => {
         }).then((c) => {
           logger.verbose(`Created Client: ${c.client_id}`);
           config.setValue("EXTENSION_CLIENT_ID", c.client_id);
-        }).catch((e) => logger.debug(e.message))
+          res.sendStatus(204);
+        }).catch((err) => {
+        logger.debug('Error creating client client');
+        logger.error(err);
+
+        // even if deleting fails, we need to be able to uninstall the extension.
+        res.sendStatus(204);
+      });
   })
   return hooks;
 };
