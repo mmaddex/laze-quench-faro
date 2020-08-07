@@ -15,15 +15,17 @@ export default (storage) => {
   const api = Router();
 
   // Allow end users to authenticate. End users authorization implemented in `/client/actions/auth.js`
-  api.use(middlewares.authenticateUsers.optional({
-    domain: config('AUTH0_DOMAIN'),
-    audience: config('EXTENSION_CLIENT_ID'),
-    credentialsRequired: false,
-    onLoginSuccess: (req, res, next) => {
-      // you can modify `req.user` object here
-      return next();
-    }
-  }));
+  if(!!config('EXTENSION_CLIENT_ID')) {
+    api.use(middlewares.authenticateUsers.optional({
+      domain: config('AUTH0_DOMAIN'),
+      audience: config('EXTENSION_CLIENT_ID'),
+      credentialsRequired: false,
+      onLoginSuccess: (req, res, next) => {
+        // you can modify `req.user` object here
+        return next();
+      }
+    }));
+  }
 
   // Allow dashboard admins to authenticate.
   api.use(middlewares.authenticateAdmins.optional({
