@@ -38,14 +38,10 @@ nconf
   .defaults({
     NODE_ENV: 'development',
     HOSTING_ENV: 'default',
-    AUTH0_RTA: "https://auth0.auth0.com",
-    PORT: 3001,
-    WT_URL: "http://localhost:3001",
-    PUBLIC_WT_URL: "http://localhost:3001"
+    PORT: 3001
   });
 
 // Start the server.
-console.log('index.js: starting server')
 const app = require('./server').default((key) => nconf.get(key), null);
 const port = nconf.get('PORT');
 

@@ -6,8 +6,6 @@ import { urlHelpers } from 'auth0-extension-express-tools';
 import config from '../lib/config';
 
 export default () => {
-  console.log('./server/routes/html.js: creating default html')
-
   const template = `
     <!DOCTYPE html>
     <html lang="en">
@@ -41,8 +39,6 @@ export default () => {
 
   return (req, res, next) => {
     if (req.url.indexOf('/api') === 0) {
-      console.log('./server/routes/html.js: ignoring api route')
-
       return next();
     }
 
@@ -61,17 +57,12 @@ export default () => {
     // `process.env.CLIENT_VERSION` variable sets up automatically on build process
     //const clientVersion = process.env.CLIENT_VERSION;
     const clientVersion = '0.0.0';
-    console.log('./server/routes/html.js: process.env.CLIENT_VERSION ', process.env.CLIENT_VERSION)
-    console.log('./server/routes/html.js: settings ', settings)
-
     if (clientVersion) {
       const favIcon = config('FAVICON_PATH') || 'https://cdn.auth0.com/styleguide/4.6.13/lib/logos/img/favicon.png';
       // replace with something real after a client build
       //const cdnPath = config('CDN_PATH') || '//cdn.auth0.com/extensions/auth0-example-extension/assets';
       //const cdnPath = 'https://raw.githubusercontent.com/mmaddex/laze-quench-faro/master/build/assets';
       const cdnPath = 'https://cdn.jsdelivr.net/gh/mmaddex/laze-quench-faro/build/assets'
-      console.log('./server/routes/html.js: rendering ejs template if CLIENT_VERSION exits')
-
       return res.send(ejs.render(template, {
         config: settings,
         assets: {
@@ -86,7 +77,6 @@ export default () => {
     // if no `process.env.CLIENT_VERSION` provided (when running locally), it'll try to load local assets
     // the extension is trying to load built assets from `/dist` directory
     // and if there are no assets prepared, it'll use bundle.js made by webpack dev server
-    console.log('./server/routes/html.js: rendering ejs template locally')
     return fs.readFile(path.join(__dirname, '../../dist/manifest.json'), 'utf8', (err, manifest) => {
       const locals = {
         config: settings,
@@ -94,7 +84,6 @@ export default () => {
           app: 'bundle.js'
         }
       };
-      console.log('./server/routes/html.js: locals', locals)
       if (!err && manifest) {
         locals.assets = {
           ...JSON.parse(manifest)

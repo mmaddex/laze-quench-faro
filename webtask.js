@@ -8,7 +8,6 @@ const expressApp = require("./server").default;
 const logger = require("./server/lib/logger");
 
 module.exports = tools.createServer((cfg, storage) => {
-  console.log("webtask.js: createServer is called");
   logger.info(
     "Starting Auth0 Example Extension - Version:",
     process.env.CLIENT_VERSION
