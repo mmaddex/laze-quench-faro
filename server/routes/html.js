@@ -59,13 +59,16 @@ export default () => {
 
     // Render from CDN.
     // `process.env.CLIENT_VERSION` variable sets up automatically on build process
-    const clientVersion = process.env.CLIENT_VERSION;
+    //const clientVersion = process.env.CLIENT_VERSION;
+    const clientVersion = '0.0.0';
     console.log('./server/routes/html.js: process.env.CLIENT_VERSION ', process.env.CLIENT_VERSION)
     console.log('./server/routes/html.js: settings ', settings)
 
     if (clientVersion) {
       const favIcon = config('FAVICON_PATH') || 'https://cdn.auth0.com/styleguide/4.6.13/lib/logos/img/favicon.png';
-      const cdnPath = config('CDN_PATH') || '//cdn.auth0.com/extensions/auth0-example-extension/assets';
+      // replace with something real after a client build
+      //const cdnPath = config('CDN_PATH') || '//cdn.auth0.com/extensions/auth0-example-extension/assets';
+      const cdnPath = 'https://raw.githubusercontent.com/mmaddex/laze-quench-faro/master/build/assets';
       console.log('./server/routes/html.js: rendering ejs template if CLIENT_VERSION exits')
 
       return res.send(ejs.render(template, {
