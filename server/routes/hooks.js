@@ -40,6 +40,8 @@ export default () => {
   hooks.use("/on-install", hookValidator("/.extensions/on-install"));
   hooks.post("/on-install", (req, res) => {
     logger.verbose('Creating SPA client...');
+    res.sendStatus(204);
+    /*
     req.auth0.createClient({
           name: 'breaking-changes-spa',
           app_type: "spa",
@@ -56,6 +58,7 @@ export default () => {
         // even if deleting fails, we need to be able to uninstall the extension.
         res.sendStatus(204);
       });
+      */
   })
   return hooks;
 };
