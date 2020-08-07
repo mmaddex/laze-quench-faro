@@ -135,7 +135,7 @@ const processTokens = (dispatch, apiToken) => {
       }
     });
 
-    dispatch(push('/user'));
+    dispatch(push('/dashboard'));
 
     resolve();
   });

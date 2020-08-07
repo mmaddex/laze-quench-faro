@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Json } from 'auth0-extension-ui';
+import ReactJson from 'react-json-view';
 
 import connectContainer from 'redux-static';
 
@@ -19,11 +20,6 @@ export default connectContainer(class extends Component {
 
     return (
       <div className="configuration">
-        <div className="row content-header">
-          <div className="col-xs-12 user-table-content">
-            <h2>Deprecations</h2>
-          </div>
-        </div>
         <div>
           {depnotes.map((d) => (
             <div className="row" key={d.title}>
@@ -31,9 +27,9 @@ export default connectContainer(class extends Component {
                 <h3>{d.title}</h3>
                 <ul style={{'listStyleType':'none'}}>
                   <li><b>Migration window:</b> {d.migration_window}</li>
-                  <li><b>Last request:</b> {d.last_request}</li>
+                  <li><b>Last request detected:</b> {d.last_request}</li>
                   <li><b>Migration guide:</b> <a href={d.migration_guide}>{d.migration_guide}</a></li>
-                  <li><b>Details</b> <Json jsonObject={d.details} /></li>
+                  <li><ReactJson src={d.details} collapsed={true} name={'details'} iconStyle={'circle'} enableClipboard={false} displayDataTypes={false} displayObjectSize={false}/></li>
                 </ul>
               </div>
             </div>

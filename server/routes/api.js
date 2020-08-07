@@ -46,6 +46,13 @@ export default (storage) => {
 
   api.get('/depnotes', managementApiClient, (req, res, next) => {
     const maxDate = (dates) => new Date(Math.max.apply(null, dates.map(d => new Date(d))))
+    const uniqueMerge = (destinationArray, sourceArray, options) => Array.from(new Set(destinationArray.concat(sourceArray)))
+    /* this needs to use keys to collect similar logs, i.e. this is not the place to 
+    / create well formed json for an api response.
+    / for example this format will merge all logs for depnote.description, and beneath
+    / that it will merege all logs with the same depnote.client_id, and
+    / depnote.details.request.path
+    */
     const depNoteShaper = (depnote) => (
       {
         [depnote.description]: {
@@ -55,9 +62,11 @@ export default (storage) => {
           details: {
             clients: {
               [depnote.client_id]: {
-                paths: [
-                  depnote.details.request.path
-                ]
+                [depnote.details.request.path]: {
+                  ip_addresses: [depnote.details.request.ip],
+                  user_agents: [depnote.details.request.userAgent],
+                  request_dates: [depnote.date]
+                }
               }
             }
           }
@@ -88,10 +97,11 @@ export default (storage) => {
         var total = result.total
         var breakingChanges = result.logs.reduce(
           // reduces array of logs to a an object to collect all the related notes
-          (acc, depnote) => merge(depNoteShaper(depnote), acc),
+          (acc, depnote) => merge(depNoteShaper(depnote), acc, {arrayMerge: uniqueMerge}),
           {}
         )
         // creates array of well formed json sumarizing breaking changes
+        // it would be nice if the details only showed the last_request for each client/connection/etc
         res.json(Object.keys(breakingChanges).map((k) => (
           {
             title: metadata[k].title,
