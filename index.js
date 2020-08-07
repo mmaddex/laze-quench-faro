@@ -1,25 +1,25 @@
- /*
- * This files purpose is to run the extension locally
- * It isn't a part of the extensions bundle
- */
+/*
+* This files purpose is to run the extension locally
+* It isn't a part of the extensions bundle
+*/
 
 const path = require('path');
 const nconf = require('nconf');
 const logger = require('./server/lib/logger');
 
 require('@babel/register')({
-  ignore: [ /node_modules/ ],
+  ignore: [/node_modules/],
   sourceMaps: !(process.env.NODE_ENV === 'production'),
   plugins: [
     '@babel/plugin-proposal-export-default-from',
     '@babel/plugin-proposal-object-rest-spread'
   ],
   presets: [
-    [ '@babel/env', {
+    ['@babel/env', {
       targets: {
         node: 'current'
       }
-    } ]
+    }]
   ]
 });
 
@@ -43,6 +43,7 @@ nconf
   });
 
 // Start the server.
+console.log('index.js: starting server')
 const app = require('./server').default((key) => nconf.get(key), null);
 const port = nconf.get('PORT');
 

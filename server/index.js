@@ -11,6 +11,7 @@ import config from './lib/config';
 import logger from './lib/logger';
 
 export default function (cfg, storageProvider) {
+  console.log('./server/index.js: START creating express app')
   // config initialization
   config.setProvider(cfg);
 
@@ -20,8 +21,9 @@ export default function (cfg, storageProvider) {
     ? new tools.WebtaskStorageContext(storageProvider)
     // use local file storage if webtask storage unavailable
     : new tools.FileStorageContext(path.join(__dirname, './data.json'));
-
+  console.log('./server/index.js: creating express app instance')
   const app = new Express();
+  console.log('./server/index.js: setting up express app routes')
 
   // dashboardAdmins route allows login with dashboard admin credentials
   app.use(routes.dashboardAdmins({
@@ -46,6 +48,8 @@ export default function (cfg, storageProvider) {
   app.use('/app', Express.static(path.join(__dirname, '../dist')));
   app.use('/meta', meta());
   app.use('/.extensions', hooks());
+
+  console.log('./server/index.js: setting default html route')
 
   // Fallback to rendering HTML.
   app.get('*', htmlRoute());
