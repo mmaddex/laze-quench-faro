@@ -48,9 +48,8 @@ export default () => {
           callbacks: ["https://kazoo-sanguine-hyphen.us12.webtask.io/auth0-breaking-changes-dashboard/login"]
         }).then((c) => {
           logger.verbose(`Created Client: ${c.client_id}`);
-          //config.setValue("EXTENSION_CLIENT_ID", c.client_id);
-          config.EXTENSION_CLIENT_ID = c.client_id;
-          logger.verbose(`see the config: ${config.EXTENSION_CLIENT_ID}`);
+          config.setValue('EXTENSION_CLIENT_ID', c.client_id);
+          logger.verbose(`see the config: ${config('EXTENSION_CLIENT_ID')}`);
           res.sendStatus(204);
         }).catch((err) => {
         logger.debug('Error creating client client');
