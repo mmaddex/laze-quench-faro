@@ -19,11 +19,6 @@
     "createClient": true,
     "onUninstallPath": "/.extensions/on-uninstall",
     "onInstallPath": "/.extensions/on-install",
-    "scopes": "read:logs read:clients delete:clients"
-  },
-  "secrets": {
-    "EXTENSION_CLIENT_ID": {
-      "required": true,
-      "description": "SPA Client ID"
-    }}
+    "scopes": "read:logs read:clients delete:clients create:clients"
+  }
 }

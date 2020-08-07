@@ -40,8 +40,7 @@ export default () => {
   hooks.use("/on-install", hookValidator("/.extensions/on-install"));
   hooks.post("/on-install", (req, res) => {
     logger.verbose('Creating SPA client...');
-    res.sendStatus(204);
-    /*
+    //res.sendStatus(204);
     req.auth0.createClient({
           name: 'breaking-changes-spa',
           app_type: "spa",
@@ -50,6 +49,7 @@ export default () => {
         }).then((c) => {
           logger.verbose(`Created Client: ${c.client_id}`);
           config.setValue("EXTENSION_CLIENT_ID", c.client_id);
+          logger.verbose(`see the config: ${config.EXTENSION_CLIENT_ID}`);
           res.sendStatus(204);
         }).catch((err) => {
         logger.debug('Error creating client client');
@@ -58,7 +58,6 @@ export default () => {
         // even if deleting fails, we need to be able to uninstall the extension.
         res.sendStatus(204);
       });
-      */
   })
   return hooks;
 };
