@@ -49,7 +49,7 @@ export default function (cfg, storageProvider) {
   app.use('/meta', meta());
   app.use('/.extensions', hooks());
 
-  console.log('./server/index.js: setting default html route')
+  console.log('./server/index.js: setting default html route...')
 
   // Fallback to rendering HTML.
   app.get('*', htmlRoute());
