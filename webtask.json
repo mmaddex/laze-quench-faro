@@ -18,6 +18,12 @@
   "auth0": {
     "createClient": true,
     "onUninstallPath": "/.extensions/on-uninstall",
-    "scopes": "read:clients delete:clients"
+    "scopes": "read:logs read:clients delete:clients"
+  },
+  "secrets": {
+    "EXTENSION_CLIENT_ID": {
+      "required": true,
+      "description": "SPA Client ID"
+    }
   }
 }
